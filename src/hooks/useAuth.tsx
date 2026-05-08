@@ -1,14 +1,22 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
-import { User as SupabaseUser, Session } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase'
-import { User } from '@/types'
+
+interface User {
+  id: string
+  name: string
+  bio: string | null
+  age: number | null
+  photo_url: string | null
+  location: unknown
+  created_at: string
+}
 
 interface AuthContextType {
-  supabaseUser: SupabaseUser | null
+  supabaseUser: unknown
   profile: User | null
-  session: Session | null
+  session: unknown
   loading: boolean
   refreshProfile: () => Promise<void>
 }
@@ -22,9 +30,9 @@ const AuthContext = createContext<AuthContextType>({
 })
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [supabaseUser, setSupabaseUser] = useState<SupabaseUser | null>(null)
+  const [supabaseUser, setSupabaseUser] = useState<unknown>(null)
   const [profile, setProfile] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
+  const [session, setSession] = useState<unknown>(null)
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
 
@@ -34,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const refreshProfile = async () => {
-    if (supabaseUser) await fetchProfile(supabaseUser.id)
+    if (supabaseUser) await fetchProfile((supabaseUser as {id: string}).id)
   }
 
   useEffect(() => {
