@@ -1,5 +1,8 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
-import { AuthProvider } from "@/hooks/useAuth";
+import { AuthProvider } from "@/hooks/...";
+
 
 export const metadata: Metadata = {
   title: "SayHi 🔥",
