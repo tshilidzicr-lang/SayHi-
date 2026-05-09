@@ -49,8 +49,11 @@ export default function ChatPage() {
         .eq('id', matchId)
         .single()
       if (!match) return
-      const userId = (supabaseUser as {id: string}).id
-      const otherId = match.user1_id === userId ? match.user2_id : match.user1_id
+      const userId = (supabaseUser as any)?.id
+      const otherId =
+  match.user1_id === userId
+    ? match.user2_id
+    : match.user1_id
       const { data: user } = await supabase
         .from('users')
         .select('*')
