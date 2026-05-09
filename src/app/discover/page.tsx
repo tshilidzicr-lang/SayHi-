@@ -33,7 +33,7 @@ export default function DiscoverPage() {
   const fetchCandidates = useCallback(async () => {
     if (!supabaseUser) return
     setFetchingUsers(true)
-    const uid = (supabaseUser as {id:string}).id
+    const uid = (supabaseUser as any)?.id
     try {
       const { data: liked } = await supabase
         .from('likes').select('to_user_id').eq('from_user_id', uid)
