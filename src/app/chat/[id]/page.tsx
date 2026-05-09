@@ -24,7 +24,7 @@ interface OtherUser {
 
 export default function ChatPage() {
   const params = useParams()
-  const matchId = params.id as string
+  const matchId = (params?.id ?? "") as string
   const { supabaseUser, loading } = useAuth()
   const router = useRouter()
   const supabase = createClient()
